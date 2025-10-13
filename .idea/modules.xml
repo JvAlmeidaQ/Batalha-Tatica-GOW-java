@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Batalha-Tatica-GOW-java.iml" filepath="$PROJECT_DIR$/.idea/Batalha-Tatica-GOW-java.iml" />
-      <module fileurl="file://$PROJECT_DIR$/BatalhaTaticaWesteros.iml" filepath="$PROJECT_DIR$/BatalhaTaticaWesteros.iml" />
     </modules>
   </component>
 </project>
