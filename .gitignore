@@ -46,8 +46,25 @@ target/
 build/
 
 # ========================
+# 🐘 Eclipse (remoção completa)
+# ========================
+.classpath
+.project
+.settings/
+bin/
+
+# ========================
 # ☁️ Outros
 # ========================
 # Arquivos temporários do sistema operacional
 .DS_Store
 Thumbs.db
+
+# ========================
+# 🧰 Extras (opcional, mas útil)
+# ========================
+# Arquivos de backup e temporários
+*~
+*.swp
+*.bak
+*.tmp
