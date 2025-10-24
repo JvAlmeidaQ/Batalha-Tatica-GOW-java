@@ -57,6 +57,22 @@ public abstract class Personagem {
         this.posicao = posicao;
     }
 
+    public int getLinha() {
+        return this.posicao.getLinha();
+    }
+
+    public void setLinha(int linha) {
+        this.posicao.setLinha(linha);
+    }
+
+    public int getColuna() {
+        return this.posicao.getColuna();
+    }
+
+    public void setColuna(int coluna) {
+        this.posicao.setColuna(coluna);
+    }
+
     public abstract Integer modOfensivo(Personagem alvo);
 
     public abstract Integer modOfdef(Integer dano);

@@ -1,98 +1,41 @@
 package br.com.BatalhaTatica.model;
 
-import br.com.BatalhaTatica.model.Personagem;
-
 public class Tabuleiro {
-    public Integer [][] tabuleiro;
-    
 
+    private final int TAM = 10;
+    private final Personagem[][] tabuleiro = new Personagem[TAM][TAM];
 
-    public Tabuleiro() {
-        tabuleiro = new Integer[10][10];
-    }
-    
-    public int setRandomLinha() {
-    	return (int) (Math.random() * 10);
-    }
-    
-    public int setRandomColuna() {
-    	return (int) (Math.random() * 10)/7;
-    }
-    public final void setInicialPosition(Personagem x) {
-    	int line, column;
-    	line = setRandomLinha();
-    	column = setRandomColuna();
-    	while(tabuleiro[line][column] != null) { //checa se a posição esta vazia
-    		line = setRandomLinha();
-    		column = setRandomColuna();
-    	}
-    	
-    	x.Posicao.linha = line;
-    	x.Posicao.coluna = column;
-    	
-    	tabuleiro[line][column] = x.casa;
+    public Personagem getPosicaoPersonagem(Posicao p) {
+        return this.tabuleiro[p.getLinha()][p.getColuna()];
     }
 
-    //norte 1
-    //leste 2
-    //sul 3
-    //oeste 4
-    public int move(Personagem x, int direcao) {
-    	if(direcao == 1) {
-    		if(Posicao.linha == 0)
-    			return -2;
-    		else
-    			x.Posicao.linha--;
-    	}
-    	else if(direcao == 2) {
-    		if(Posicao.coluna == 9)
-    			return -2;
-    		else
-    			x.Posicao.coluna++;
-    	}
-    	else if(direcao == 3) {
-    		if(Posicao.linha == 9)
-    			return -2;
-    		else    		
-    			x.Posicao.linha++;
-    	}
-    	else if(direcao == 4) {
-    		if(Posicao.coluna == 0)
-    			return -2;
-    		else
-    			x.Posicao.coluna--;
-    	}
-    	else
-    		return -1;
-    	return 0;
+    public boolean posicaoIsOcupada(Posicao p) {
+        return getPosicaoPersonagem(p) != null;
     }
 
-	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗\n");
-		for(int i=0; i<9; i++) {
-			for(int j=0; j<10; j++) {
-				sb.append("║");
-				if(this.tabuleiro[i][j] == null)
-					sb.append("   ");
-				else
-					sb.append(" " + tabuleiro[i][j] + " ");
-			}
-			sb.append("║\n");
-			sb.append("╞═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╡\n");
-		}
-		for(int j=0, i=9; j<10; j++) {
-			sb.append("║");
-			if(this.tabuleiro[i][j] == null)
-				sb.append("   ");
-			else
-				sb.append(" " + tabuleiro[i][j] + " ");
-		}
-		sb.append("║\n");
-		sb.append("╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝\n");
-		
-		return sb.toString();
-	}
+    public void adicionarPersonagem(Personagem personagem, Posicao p) {
+        this.tabuleiro[p.getLinha()][p.getColuna()] = personagem;
+    }
+
+    public void novaPosicao(Personagem personagem, Posicao novaPosicao) {
+        this.limparPosicao(personagem.getPosicao());
+        personagem.setPosicao(novaPosicao);
+        this.adicionarPersonagem(personagem, novaPosicao);
+    }
+
+    public void limparPosicao(Posicao p) {
+        this.tabuleiro[p.getLinha()][p.getColuna()] = null;
+    }
+
+    public boolean posNosLimites(Posicao p) {
+        if (p.getLinha() >= TAM && p.getColuna() >= TAM)
+            return false;
+        return p.getLinha() >= 0 && p.getColuna() >= 0;
+    }
+
+    public boolean verificarPosicao(Posicao p) {
+        if (!this.posNosLimites(p) && this.posicaoIsOcupada(p))
+            return false;
+        return true;
+    }
 }

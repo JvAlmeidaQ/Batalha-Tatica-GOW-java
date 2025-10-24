@@ -1,0 +1,51 @@
+package br.com.BatalhaTatica.service;
+
+import br.com.BatalhaTatica.model.Direcao;
+import br.com.BatalhaTatica.model.Personagem;
+import br.com.BatalhaTatica.model.Posicao;
+import br.com.BatalhaTatica.model.Tabuleiro;
+
+public class Movimentacao {
+
+    private final Tabuleiro tabuleiro;
+
+    public Movimentacao(Tabuleiro tabuleiro) {
+        this.tabuleiro = tabuleiro;
+    }
+
+    public int setRandomLinha() {
+        return (int) (Math.random() * 10);
+    }
+
+    public int setRandomColuna() {
+        return (int) (Math.random() * 10) / 7;
+    }
+
+    public void setPosicaoInicial(Personagem personagem) {
+        int linha = setRandomLinha();
+        int coluna = setRandomColuna();
+
+        Posicao posicao = new Posicao(linha, coluna);
+
+        if (!this.tabuleiro.posicaoIsOcupada(posicao)) {
+            personagem.setPosicao(posicao);
+            this.tabuleiro.adicionarPersonagem(personagem, posicao);
+        } else
+            setPosicaoInicial(personagem);
+    }
+
+    public void moverPersonagem(Personagem personagem, Direcao direcao) {
+        Posicao novaPosicao;
+        switch (direcao) {
+            case CIMA -> novaPosicao = new Posicao(personagem.getLinha() - 1, personagem.getColuna());
+            case DIREITA -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna() + 1);
+            case BAIXO -> novaPosicao = new Posicao(personagem.getLinha() + 1, personagem.getColuna());
+            case ESQUERDA -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna() - 1);
+            default -> throw new IllegalStateException("Unexpected value: " + direcao); //Execção Peronalizada;
+        }
+        if (!this.tabuleiro.verificarPosicao(novaPosicao))
+            return; // lançar execção
+        this.tabuleiro.novaPosicao(personagem, novaPosicao);
+    }
+
+}
