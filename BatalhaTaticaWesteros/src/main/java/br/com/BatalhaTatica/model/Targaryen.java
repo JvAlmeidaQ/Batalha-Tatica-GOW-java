@@ -6,7 +6,7 @@ public class Targaryen extends Personagem {
     }
 
     @Override
-    public Integer modOfensivo(Personagem alvo) {
+    public int modOfensivo() {
         return this.getAtkBase();
     }
 
@@ -16,7 +16,7 @@ public class Targaryen extends Personagem {
     }
 
     @Override
-    public Integer alcanceMax() {
+    public int alcanceMax() {
         return 3;
     }
 }

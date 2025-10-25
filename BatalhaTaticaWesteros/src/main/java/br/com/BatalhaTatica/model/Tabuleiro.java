@@ -5,16 +5,16 @@ public class Tabuleiro {
     private final int TAM = 10;
     private final Personagem[][] tabuleiro = new Personagem[TAM][TAM];
 
-    public Personagem getPosicaoPersonagem(Posicao p) {
-        return this.tabuleiro[p.getLinha()][p.getColuna()];
-    }
-
-    public boolean posicaoIsOcupada(Posicao p) {
-        return getPosicaoPersonagem(p) != null;
-    }
-
     public void adicionarPersonagem(Personagem personagem, Posicao p) {
         this.tabuleiro[p.getLinha()][p.getColuna()] = personagem;
+    }
+
+    public void limparPosicao(Posicao p) {
+        this.tabuleiro[p.getLinha()][p.getColuna()] = null;
+    }
+
+    public Personagem getPosicaoPersonagem(Posicao p) {
+        return this.tabuleiro[p.getLinha()][p.getColuna()];
     }
 
     public void novaPosicao(Personagem personagem, Posicao novaPosicao) {
@@ -23,8 +23,8 @@ public class Tabuleiro {
         this.adicionarPersonagem(personagem, novaPosicao);
     }
 
-    public void limparPosicao(Posicao p) {
-        this.tabuleiro[p.getLinha()][p.getColuna()] = null;
+    public boolean posicaoIsOcupada(Posicao p) {
+        return getPosicaoPersonagem(p) != null;
     }
 
     public boolean posNosLimites(Posicao p) {

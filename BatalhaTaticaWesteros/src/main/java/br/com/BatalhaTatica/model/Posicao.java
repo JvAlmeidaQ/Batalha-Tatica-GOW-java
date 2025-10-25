@@ -51,8 +51,8 @@ public class Posicao {
     @Override
     public String toString() {
         return "Posicao [" +
-                "linha=" + linha +
-                ", coluna=" + coluna +
+                linha +
+                "][" + coluna +
                 ']';
     }
 }

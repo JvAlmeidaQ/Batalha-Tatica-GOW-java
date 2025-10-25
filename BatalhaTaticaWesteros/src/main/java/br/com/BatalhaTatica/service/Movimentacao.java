@@ -25,7 +25,11 @@ public class Movimentacao {
         int linha = setRandomLinha();
         int coluna = setRandomColuna();
 
-        Posicao posicao = new Posicao(linha, coluna);
+        Posicao posicao;
+        if (personagem.getId() <= 3)
+            posicao = new Posicao(linha, coluna);
+        else
+            posicao = new Posicao(linha, 9 - coluna);
 
         if (!this.tabuleiro.posicaoIsOcupada(posicao)) {
             personagem.setPosicao(posicao);

@@ -14,7 +14,7 @@ public class JogoVisualizer {
 
     public String getRepresentacaoVisual(Personagem personagem) {
         if (personagem == null) {
-            return " ";
+            return "  ";
         }
         return switch (personagem.getCasa()) {
             case STARK -> "🐺";
@@ -26,7 +26,7 @@ public class JogoVisualizer {
 
     public String imprimeTabuleiro() {
         StringBuilder tab = new StringBuilder();
-        tab.append("╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗\n");
+        tab.append("╔════╤════╤════╤════╤════╤════╤════╤════╤════╤════╗\n");
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 10; j++) {
                 tab.append("║");
@@ -37,7 +37,7 @@ public class JogoVisualizer {
                     tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
             }
             tab.append("║\n");
-            tab.append("╞═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╬═══╡\n");
+            tab.append("╞════╬════╬════╬════╬════╬════╬════╬════╬════╬════╡\n");
         }
         for (int j = 0, i = 9; j < 10; j++) {
             tab.append("║");
@@ -48,7 +48,7 @@ public class JogoVisualizer {
                 tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
         }
         tab.append("║\n");
-        tab.append("╚═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╧═══╝\n");
+        tab.append("╚════╧════╧════╧════╧════╧════╧════╧════╧════╧════╝\n");
 
         return tab.toString();
     }

@@ -1,6 +1,7 @@
 package br.com.BatalhaTatica;
 
 import br.com.BatalhaTatica.model.*;
+import br.com.BatalhaTatica.service.Movimentacao;
 import br.com.BatalhaTatica.view.JogoVisualizer;
 
 
@@ -13,13 +14,11 @@ public class App {
         Personagem lanni = new Lannister(2, "Lol");
         Personagem targ = new Targaryen(3, "Targ");
 
-        Posicao posStark = new Posicao(0, 4);
-        Posicao posLannister = new Posicao(9, 4);
-        Posicao posTargaryen = new Posicao(5, 5);
+        Movimentacao movimentacao1 = new Movimentacao(tabuleiro);
 
-        tabuleiro.adicionarPersonagem(stark1, posStark);
-        tabuleiro.adicionarPersonagem(lanni, posLannister);
-        tabuleiro.adicionarPersonagem(targ, posTargaryen);
+        movimentacao1.setPosicaoInicial(stark1);
+        movimentacao1.setPosicaoInicial(lanni);
+        movimentacao1.setPosicaoInicial(targ);
 
         String tabuleiroFormatado = jogoVisualizer.imprimeTabuleiro();
         System.out.println(tabuleiroFormatado);

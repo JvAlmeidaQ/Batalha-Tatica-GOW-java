@@ -73,11 +73,14 @@ public abstract class Personagem {
         this.posicao.setColuna(coluna);
     }
 
-    public abstract Integer modOfensivo(Personagem alvo);
+    public void setVidaAtual(Integer dano) {
+        this.vidaAtual -= dano;
+    }
+
+    public abstract int modOfensivo();
 
     public abstract Integer modOfdef(Integer dano);
 
-    public abstract Integer alcanceMax();
-
+    public abstract int alcanceMax();
 
 }
