@@ -16,7 +16,7 @@ public class Combate {
 
         DistanciaChebyshev chebyshev = new DistanciaChebyshev(atacante, defensor);
         int distancia = chebyshev.calculaDistancia();
-        if (distancia > 0 && atacante.alcanceMax() <= distancia) {
+        if (atacante.alcanceMax() >= distancia) {
             return true;
         }
         return false;
@@ -28,9 +28,13 @@ public class Combate {
 
     public void ataque(Personagem atacante, Personagem defensor) {
         if (distanciaValida(atacante, defensor) && estaVivo(defensor)) {
-            int danoBruto = atacante.modOfensivo();
-            int danoLiquid = defensor.modOfdef(danoBruto) - defensor.getDefesaBase();
-            defensor.setVidaAtual(danoLiquid);
+
+            int danoBruto = atacante.modOfensivo(defensor);
+
+            int danoLiquid = defensor.modOfdef(danoBruto);
+
+            defensor.receberDano(danoLiquid);
+
             if (!estaVivo(defensor)) {
                 this.tabuleiro.limparPosicao(defensor.getPosicao());
                 //chamar mensagem de morte na view

@@ -7,8 +7,9 @@ public class Stark extends Personagem {
     }
 
     @Override
-    public int modOfensivo() {
-        return this.getAtkBase();
+    public int modOfensivo(Personagem defensor) {
+        int dano = this.getAtkBase() - defensor.getDefesaBase();
+        return Math.max(0, dano);
     }
 
     @Override

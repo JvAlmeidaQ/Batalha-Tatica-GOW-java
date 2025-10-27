@@ -7,8 +7,10 @@ public class Lannister extends Personagem {
     }
 
     @Override
-    public int modOfensivo() {
-        return (int) (this.getAtkBase() * 1.15);
+    public int modOfensivo(Personagem defensor) {
+        int atk = (int) (this.getAtkBase() * 1.15);
+        int dano = atk - defensor.getDefesaBase();
+        return Math.max(0, dano);
     }
 
 

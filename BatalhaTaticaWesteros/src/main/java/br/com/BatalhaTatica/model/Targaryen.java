@@ -6,7 +6,7 @@ public class Targaryen extends Personagem {
     }
 
     @Override
-    public int modOfensivo() {
+    public int modOfensivo(Personagem defensor) {
         return this.getAtkBase();
     }
 

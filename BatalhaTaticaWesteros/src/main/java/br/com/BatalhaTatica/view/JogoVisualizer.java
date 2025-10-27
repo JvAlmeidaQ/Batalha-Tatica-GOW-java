@@ -1,59 +1,22 @@
 package br.com.BatalhaTatica.view;
 
+import br.com.BatalhaTatica.model.Casas;
 import br.com.BatalhaTatica.model.Personagem;
 import br.com.BatalhaTatica.model.Posicao;
 import br.com.BatalhaTatica.model.Tabuleiro;
 
+import java.util.Scanner;
+
 public class JogoVisualizer {
 
     private final Tabuleiro tabuleiro;
+    Scanner sc = new Scanner(System.in);
 
     public JogoVisualizer(Tabuleiro tabuleiro) {
         this.tabuleiro = tabuleiro;
     }
 
-    public String getRepresentacaoVisual(Personagem personagem) {
-        if (personagem == null) {
-            return "  ";
-        }
-        return switch (personagem.getCasa()) {
-            case STARK -> "🐺";
-            case LANNISTER -> "🦁";
-            case TARGARYEN -> "🐲";
-            default -> "?";
-        };
-    }
-
-    public String imprimeTabuleiro() {
-        StringBuilder tab = new StringBuilder();
-        tab.append("╔════╤════╤════╤════╤════╤════╤════╤════╤════╤════╗\n");
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 10; j++) {
-                tab.append("║");
-                Posicao posicao = new Posicao(i, j);
-                if (!this.tabuleiro.verificarPosicao(posicao))
-                    tab.append("   ");
-                else
-                    tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
-            }
-            tab.append("║\n");
-            tab.append("╞════╬════╬════╬════╬════╬════╬════╬════╬════╬════╡\n");
-        }
-        for (int j = 0, i = 9; j < 10; j++) {
-            tab.append("║");
-            Posicao posicao = new Posicao(i, j);
-            if (!this.tabuleiro.verificarPosicao(posicao))
-                tab.append("   ");
-            else
-                tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
-        }
-        tab.append("║\n");
-        tab.append("╚════╧════╧════╧════╧════╧════╧════╧════╧════╧════╝\n");
-
-        return tab.toString();
-    }
-
-    public static String gerarTabelaCasas() {
+    public String gerarTabelaCasas() {
         String header = String.format(
                 "%-21s | %-25s | %-25s | %-25s |\n",
                 "Atributo",
@@ -113,6 +76,86 @@ public class JogoVisualizer {
                 modOfensivo +
                 modDefensivo +
                 separator;
+    }
+
+    public String imprimeTabuleiro() {
+        StringBuilder tab = new StringBuilder();
+        tab.append("╔════╤════╤════╤════╤════╤════╤════╤════╤════╤════╗\n");
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 10; j++) {
+                tab.append("║");
+                Posicao posicao = new Posicao(i, j);
+                if (!this.tabuleiro.verificarPosicao(posicao))
+                    tab.append("   ");
+                else
+                    tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
+            }
+            tab.append("║\n");
+            tab.append("╞════╬════╬════╬════╬════╬════╬════╬════╬════╬════╡\n");
+        }
+        for (int j = 0, i = 9; j < 10; j++) {
+            tab.append("║");
+            Posicao posicao = new Posicao(i, j);
+            if (!this.tabuleiro.verificarPosicao(posicao))
+                tab.append("   ");
+            else
+                tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
+        }
+        tab.append("║\n");
+        tab.append("╚════╧════╧════╧════╧════╧════╧════╧════╧════╧════╝\n");
+
+        return tab.toString();
+    }
+
+    public String getRepresentacaoVisual(Personagem personagem) {
+        if (personagem == null) {
+            return "  ";
+        }
+        return switch (personagem.getCasa()) {
+            case STARK -> "🐺";
+            case LANNISTER -> "🦁";
+            case TARGARYEN -> "🐲";
+            default -> "?";
+        };
+    }
+
+    public String enviarNome() {
+        System.out.println("Digite o nome do personagem:");
+        String nome = sc.nextLine();
+
+        String trim = nome.trim();
+        while (trim.isEmpty() || !verificaNome(trim)) {
+            System.out.println("Forneça um nome válido");
+            nome = sc.nextLine();
+            trim = nome.trim();
+        }
+        return nome;
+    }
+
+    public boolean verificaNome(String nome) {
+        for (int i = 0; i < nome.length(); i++) {
+            if (!Character.isDigit(nome.charAt(i)))
+                return true;
+        }
+        return false;
+    }
+
+    public Casas enviaCasa() {
+        System.out.println(this.gerarTabelaCasas());
+        System.out.println();
+        System.out.println("Qual a casa do personagem?");
+        Casas casaEscolhida = null;
+        String nomeCasa;
+
+        while (casaEscolhida == null) {
+            nomeCasa = sc.nextLine().trim().toUpperCase();
+            try {
+                casaEscolhida = Casas.valueOf(nomeCasa);
+            } catch (IllegalArgumentException erro) {
+                System.out.println("Casa digitada inválida!\nDigite novamente.");
+            }
+        }
+        return casaEscolhida;
     }
 
 }
