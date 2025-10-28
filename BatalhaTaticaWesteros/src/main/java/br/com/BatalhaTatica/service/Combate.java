@@ -3,19 +3,22 @@ package br.com.BatalhaTatica.service;
 import br.com.BatalhaTatica.model.Personagem;
 import br.com.BatalhaTatica.model.Tabuleiro;
 import br.com.BatalhaTatica.util.DistanciaChebyshev;
+import br.com.BatalhaTatica.view.JogoVisualizer;
 
 public class Combate {
 
     private Tabuleiro tabuleiro;
+    private JogoVisualizer view;
 
-    public Combate(Tabuleiro tabuleiro) {
+    public Combate(Tabuleiro tabuleiro, JogoVisualizer jogoVisualizer) {
         this.tabuleiro = tabuleiro;
+        this.view = jogoVisualizer;
     }
 
     public boolean distanciaValida(Personagem atacante, Personagem defensor) {
 
-        DistanciaChebyshev chebyshev = new DistanciaChebyshev(atacante, defensor);
-        int distancia = chebyshev.calculaDistancia();
+        DistanciaChebyshev chebyshev = new DistanciaChebyshev();
+        int distancia = chebyshev.calculaDistancia(atacante, defensor);
         if (atacante.alcanceMax() >= distancia) {
             return true;
         }
@@ -36,8 +39,8 @@ public class Combate {
             defensor.receberDano(danoLiquid);
 
             if (!estaVivo(defensor)) {
+                System.out.println(view.mensagemMorte(atacante, defensor));
                 this.tabuleiro.limparPosicao(defensor.getPosicao());
-                //chamar mensagem de morte na view
             }
         } //else
         // lançar excessão;

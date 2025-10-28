@@ -15,12 +15,20 @@ public class Controller {
         this.jogo = jogo;
     }
 
-    public void iniciarJogo() {
+    public void iniciarJogo(int id) {
         String nome = view.enviarNome();
         Casas casa = view.enviaCasa();
 
-        Personagem novoPersonagem = jogo.criarPersonagem(0, nome, casa);
+        Personagem player1 = jogo.criarPersonagem(id, nome, casa);
         // decidir como fazer o id.
 
+    }
+
+    public void criarTime(int time){
+        view.mensagemCriarTime(time);
+        if(time == 2) {time = 4;}
+        for(int i=time; i<time+3; i++){
+            iniciarJogo(i);
+        }
     }
 }

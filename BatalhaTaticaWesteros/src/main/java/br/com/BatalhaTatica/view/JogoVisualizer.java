@@ -158,5 +158,22 @@ public class JogoVisualizer {
         return casaEscolhida;
     }
 
+    public String mensagemMorte(Personagem atacante, Personagem morto){
+        String tabulacao = "---------------------------------------------------------------------------";
+        String visualKill = getRepresentacaoVisual(atacante) + "🗡" +  getRepresentacaoVisual(morto);
+        String msg = morto.getNome() + " foi morto por " + atacante.getNome() + "!\n";
+        return tabulacao
+                + visualKill
+                + msg
+                + tabulacao;
+    }
+
+    public void mensagemCriarTime(int time){
+        if(time == 1)
+            System.out.println("Criacao do primeiro time");
+        else
+            System.out.println("Criacao do segundo time");
+    }
+
 }
 
