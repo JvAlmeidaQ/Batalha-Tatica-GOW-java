@@ -1,107 +1,55 @@
 package br.com.BatalhaTatica.service;
 
-import br.com.BatalhaTatica.model.Casas;
 import br.com.BatalhaTatica.model.Direcao;
 import br.com.BatalhaTatica.model.Personagem;
 import br.com.BatalhaTatica.util.DistanciaChebyshev;
-import br.com.BatalhaTatica.service.Combate;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class Bots {
 
-    private Jogo jogo;
     private Combate combate;
     private Random random = new Random();
     private DistanciaChebyshev dist;
 
-    public Bots(Jogo jogo, Combate combate) {
-        this.jogo = jogo;
+    public Bots(Combate combate) {
         this.combate = combate;
     }
 
-    public int geraNumero() {
-        int min = 1;
-        int max = 3;
-        int numAleatorio = min + random.nextInt(max - min + 1);
-        return numAleatorio;
-    }
-
-    public Casas geraCasa(int numeroGerado) {
-        switch (numeroGerado) {
-            case 1:
-                return Casas.STARK;
-            case 2:
-                return Casas.TARGARYEN;
-            case 3:
-                return Casas.LANNISTER;
-            default:
-                return null;
-        }
-    }
-
-    public String geraNomeCompleto(String numBotGerado) {
-        return "Bot" + numBotGerado;
-    }
-
-    public void criarBots() {
-        int qtdStark = 0;
-        int qtdLannister = 0;
-        int qtdTargaryen = 0;
-
-        for (int i = 4; i <= 6; i++) {
-            int numeroGerado = this.geraNumero();
-            Casas casaGerada = this.geraCasa(numeroGerado);
-
-            String numBot;
-            if (casaGerada == Casas.LANNISTER)
-                numBot = "Lannister" + String.valueOf(++qtdLannister);
-            else if (casaGerada == Casas.STARK)
-                numBot = "Stark" + String.valueOf(++qtdStark);
-            else
-                numBot = "Targaryen" + String.valueOf(++qtdTargaryen);
-
-            String nome = this.geraNomeCompleto(numBot);
-
-            this.jogo.criarPersonagem(i, nome, casaGerada);
-        }
-    }
-
-    public int gerarNumeroDeZeroAN_1(int n){
+    public int gerarNumeroDeZeroAN_1(int n) {
         return random.nextInt(n);
     }
 
-    public int possivbeisAtacantes(List<Personagem> time1, List<Personagem> time2){
+    public int possiveisAtacantes(List<Personagem> time1, List<Personagem> time2) {
         DistanciaChebyshev chebyshev = new DistanciaChebyshev();
         int personagensAptos = 0;
         int menorDist;
         int distancia;
-        for(Personagem pt2 : time2){
+        for (Personagem pt2 : time2) {
             menorDist = 100;
-            for(Personagem pt1 : time1){
+            for (Personagem pt1 : time1) {
                 distancia = chebyshev.calculaDistancia(pt2, pt1);
-                if(menorDist < distancia)
+                if (menorDist < distancia)
                     menorDist = distancia;
             }
-            if(pt2.alcanceMax() >= menorDist )
+            if (pt2.alcanceMax() >= menorDist)
                 personagensAptos += pt2.getId();
         }
         return personagensAptos;
     }
 
-    public int possivbeisAlvos(List<Personagem> time1, Personagem atacante){
+    public int possiveisAlvos(List<Personagem> time1, Personagem atacante) {
         int personagensAptos = 0;
-        for(Personagem pt1 : time1){
-            if(combate.distanciaValida(atacante, pt1))
-                personagensAptos += pt1.getId()+1;
+        for (Personagem pt1 : time1) {
+            if (combate.distanciaValida(atacante, pt1))
+                personagensAptos += pt1.getId() + 1;
         }
         return personagensAptos;
     }
 
     public Personagem randomplayerAtacante(List<Personagem> time1, List<Personagem> time2) {
-        int atacantesAptos = possivbeisAtacantes(time1, time2);
+        int atacantesAptos = possiveisAtacantes(time1, time2);
         switch (atacantesAptos) {
             case 0, 15 -> { //Aleatório 3/3
                 return time2.get(gerarNumeroDeZeroAN_1(time2.size()));
@@ -151,17 +99,17 @@ public class Bots {
         return null;
     }
 
-    public Personagem randomPlayerAlvo(List<Personagem> time1, Personagem atacante){
-        int alvosAptos = possivbeisAlvos(time1, atacante);
-        switch (alvosAptos){
+    public Personagem randomPlayerAlvo(List<Personagem> time1, Personagem atacante) {
+        int alvosAptos = possiveisAlvos(time1, atacante);
+        switch (alvosAptos) {
             case 0 -> {
                 DistanciaChebyshev chebyshev = new DistanciaChebyshev();
                 int distancia;
                 int menorDist = 100;
                 Personagem alvo = time1.getFirst();
-                for(Personagem pt1 : time1){
+                for (Personagem pt1 : time1) {
                     distancia = chebyshev.calculaDistancia(atacante, pt1);
-                    if(menorDist < distancia){
+                    if (menorDist < distancia) {
                         menorDist = distancia;
                         alvo = pt1;
                     }
@@ -173,7 +121,7 @@ public class Bots {
             }
             case 2, 3, 4 -> {
                 for (Personagem p : time1) {
-                    if (p.getId() == alvosAptos-1)
+                    if (p.getId() == alvosAptos - 1)
                         return p;
                 }
             }
@@ -215,29 +163,38 @@ public class Bots {
         return null;
     }
 
-    public Direcao defineDirecaoBOT(Personagem atacante, Personagem alvo){
-        if(Math.abs(atacante.getPosicao().getLinha() - alvo.getPosicao().getLinha()) <= Math.abs(atacante.getPosicao().getColuna() - alvo.getPosicao().getColuna())){
+    public Direcao defineDirecaoBOT(Personagem atacante, Personagem alvo) {
+        if (Math.abs(atacante.getPosicao().getLinha() - alvo.getPosicao().getLinha()) <= Math.abs(atacante.getPosicao().getColuna() - alvo.getPosicao().getColuna())) {
             if (atacante.getPosicao().getColuna() >= alvo.getPosicao().getColuna())
-                return Direcao.ESQUERDA;
+                return Direcao.A;
             else
-                return Direcao.DIREITA;
-        }
-        else{
+                return Direcao.D;
+        } else {
             if (atacante.getPosicao().getLinha() >= alvo.getPosicao().getLinha())
-                return Direcao.CIMA;
+                return Direcao.W;
             else
-                return Direcao.BAIXO;
+                return Direcao.S;
         }
     }
 
-    public Direcao direcaoAleatoria(){
+    public Direcao direcaoAleatoria() {
         int val = gerarNumeroDeZeroAN_1(4);
-        switch (val){
-            case 0 -> {return Direcao.CIMA;}
-            case 1 -> {return Direcao.BAIXO;}
-            case 2 -> {return Direcao.ESQUERDA;}
-            case 3 -> {return Direcao.DIREITA;}
-            default -> {return Direcao.ESQUERDA;}
+        switch (val) {
+            case 0 -> {
+                return Direcao.W;
+            }
+            case 1 -> {
+                return Direcao.S;
+            }
+            case 2 -> {
+                return Direcao.A;
+            }
+            case 3 -> {
+                return Direcao.D;
+            }
+            default -> {
+                return Direcao.A;
+            }
         }
     }
 }

@@ -2,7 +2,6 @@ package br.com.BatalhaTatica;
 
 import br.com.BatalhaTatica.model.Tabuleiro;
 import br.com.BatalhaTatica.service.Combate;
-import br.com.BatalhaTatica.service.Jogo;
 import br.com.BatalhaTatica.view.JogoVisualizer;
 
 import java.util.Scanner;
@@ -14,7 +13,6 @@ public class App {
 
         Tabuleiro tabuleiro = new Tabuleiro();
         JogoVisualizer jogoVisualizer = new JogoVisualizer(tabuleiro);
-        Jogo jogo = new Jogo();
         Combate combate = new Combate(tabuleiro, jogoVisualizer);
 
     }

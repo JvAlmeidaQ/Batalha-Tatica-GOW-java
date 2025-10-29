@@ -1,10 +1,8 @@
 package br.com.BatalhaTatica.view;
 
-import br.com.BatalhaTatica.model.Casas;
-import br.com.BatalhaTatica.model.Personagem;
-import br.com.BatalhaTatica.model.Posicao;
-import br.com.BatalhaTatica.model.Tabuleiro;
+import br.com.BatalhaTatica.model.*;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class JogoVisualizer {
@@ -158,9 +156,9 @@ public class JogoVisualizer {
         return casaEscolhida;
     }
 
-    public String mensagemMorte(Personagem atacante, Personagem morto){
+    public String mensagemMorte(Personagem atacante, Personagem morto) {
         String tabulacao = "---------------------------------------------------------------------------";
-        String visualKill = getRepresentacaoVisual(atacante) + "🗡" +  getRepresentacaoVisual(morto);
+        String visualKill = getRepresentacaoVisual(atacante) + "🗡" + getRepresentacaoVisual(morto);
         String msg = morto.getNome() + " foi morto por " + atacante.getNome() + "!\n";
         return tabulacao
                 + visualKill
@@ -168,12 +166,80 @@ public class JogoVisualizer {
                 + tabulacao;
     }
 
-    public void mensagemCriarTime(int time){
-        if(time == 1)
+    public int modoDaPartida() {
+        System.out.println("\n==============================");
+        System.out.println("        MODO DA PARTIDA       ");
+        System.out.println("==============================");
+        System.out.println("Escolha o modo de jogo:");
+        System.out.println("  1. Jogador vs Jogador");
+        System.out.println("  2. Jogador vs Bot");
+        System.out.print("→ Sua escolha: ");
+
+        int escolha = sc.nextInt();
+        return escolha;
+    }
+
+    public void mensagemCriarTime(int time) {
+        if (time == 1)
             System.out.println("Criacao do primeiro time");
         else
             System.out.println("Criacao do segundo time");
     }
 
+    public void mensagemDeCriacao() {
+        System.out.println("⚔️  Times foram formados, bandeiras erguidas!");
+        System.out.println("🏟️  Cada equipe está em posição, pronta para a batalha.");
+        System.out.println("🔥  O jogo está prestes a começar... Que vença o melhor!");
+    }
+
+    public void numTurno(int turno) {
+        System.out.println("🔄 Turno " + turno + " iniciado.");
+        System.out.println("Analise, planeje e execute sua jogada!");
+    }
+
+    public Personagem escolhaDoPersonagem(List<Personagem> personagens) {
+        System.out.println("=== Lista de Personagens Ativos ===");
+        for (Personagem p : personagens) {
+            System.out.println(p);
+            System.out.println("----------------------------");
+        }
+
+        Personagem personagemEncontrado = null;
+        while (personagemEncontrado == null) {
+            System.out.print("Digite o nome do Personagem que você vai jogar nessa rodada: ");
+            String nome = sc.nextLine();
+
+            for (Personagem p : personagens) {
+                if (p.getNome().equals(nome))
+                    personagemEncontrado = p;
+            }
+            if (personagemEncontrado == null)
+                System.out.print("Personagem não encontrado, digite um nome valido: ");
+        }
+
+        return personagemEncontrado;
+    }
+
+    // No seu pacote View
+
+    public Direcao escolhaDoDirecao() {
+        Direcao direcaoEscolhida = null;
+
+        while (direcaoEscolhida == null) {
+            System.out.println("Em qual direção vc quer se mover: ");
+            System.out.println("W (Cima) / A (Esquerda) / S (Baixo) / D (Direita)");
+            System.out.print("→ Sua escolha: ");
+            String escolha = sc.nextLine();
+
+            try {
+                direcaoEscolhida = Direcao.valueOf(escolha.toUpperCase());
+
+            } catch (IllegalArgumentException e) { //Mudar execessão?
+                System.out.println("❌ Direção inválida! Por favor, digite apenas W, A, S ou D.");
+            }
+
+        }
+        return direcaoEscolhida;
+    }
 }
 

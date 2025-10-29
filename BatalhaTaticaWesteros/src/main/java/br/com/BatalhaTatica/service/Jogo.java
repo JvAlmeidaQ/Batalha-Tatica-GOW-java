@@ -4,6 +4,7 @@ import br.com.BatalhaTatica.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Jogo {
@@ -11,7 +12,31 @@ public class Jogo {
     private List<Personagem> time1 = new ArrayList<>();
     private List<Personagem> time2 = new ArrayList<>();
 
-    public Personagem criarPersonagem(int id, String nome, Casas casa) {
+    private Combate combate;
+    private Movimentacao movimentacao;
+    private Bots bot;
+    private Tabuleiro tabuleiro;
+    private Replay replay;
+
+    private Random random = new Random();
+    private int proximoId = 1;
+    private int numTurno = 0;
+    private int modoPartida;
+
+    public Jogo(Combate combate, Movimentacao movimentacao, Bots bot, Tabuleiro tabuleiro, Replay replay) {
+        this.combate = combate;
+        this.movimentacao = movimentacao;
+        this.bot = bot;
+        this.tabuleiro = tabuleiro;
+        this.replay = replay;
+    }
+
+
+    public Personagem criarPersonagem(String nome, Casas casa) {
+
+        int id = this.proximoId;
+        this.proximoId++;
+
         Personagem personagem;
         if (casa == Casas.STARK)
             personagem = new Stark(id, nome);
@@ -19,18 +44,105 @@ public class Jogo {
             personagem = new Lannister(id, nome);
         else
             personagem = new Targaryen(id, nome);
-        if(id <= 3)
+        if (id <= 3)
             time1.add(personagem);
         else
             time2.add(personagem);
+
         return personagem;
     }
 
-    public void getTime(){
+    public void criarBots() {
+        int qtdStark = 0;
+        int qtdLannister = 0;
+        int qtdTargaryen = 0;
 
+        for (int i = 0; i < 3; i++) {
+            int numeroGerado = this.geraNumero();
+            Casas casaGerada = this.geraCasa(numeroGerado);
+
+            String numBot;
+            if (casaGerada == Casas.LANNISTER)
+                numBot = "Lannister" + String.valueOf(++qtdLannister);
+            else if (casaGerada == Casas.STARK)
+                numBot = "Stark" + String.valueOf(++qtdStark);
+            else
+                numBot = "Targaryen" + String.valueOf(++qtdTargaryen);
+
+            String nome = this.geraNomeCompleto(numBot);
+
+            this.criarPersonagem(nome, casaGerada);
+        }
     }
 
+    private int geraNumero() {
+        int min = 1;
+        int max = 3;
+        int numAleatorio = min + random.nextInt(max - min + 1);
+        return numAleatorio;
+    }
 
+    public Casas geraCasa(int numeroGerado) {
+        switch (numeroGerado) {
+            case 1:
+                return Casas.STARK;
+            case 2:
+                return Casas.TARGARYEN;
+            case 3:
+                return Casas.LANNISTER;
+            default:
+                return null;
+        }
+    }
 
+    public String geraNomeCompleto(String numBotGerado) {
+        return "Bot" + numBotGerado;
+    }
 
+    public void posicionarTimes() {
+        for (Personagem personagem : this.time1)
+            movimentacao.setPosicaoInicial(personagem);
+        for (Personagem personagem : this.time2)
+            movimentacao.setPosicaoInicial(personagem);
+    }
+
+    public void recebeModoDaPartida(int modo) {
+        this.modoPartida = modo;
+    }
+
+    public int getNumTurno() {
+        return this.numTurno;
+    }
+
+    public void setNumTurno() {
+        this.numTurno++;
+    }
+
+    public String turnoDeQuem() {
+        if (this.numTurno % 2 == 0)
+            return "Jogador";
+        else if (this.modoPartida == 2)
+            return "Robo";
+        else
+            return "Jogador";
+    }
+
+    public List<Personagem> getTime() {
+        if (this.numTurno % 2 == 0)
+            return this.time1;
+        else
+            return this.time2;
+    }
+
+    public void acaoPersonagem(Personagem personagemEscolhido, Direcao direcaoEscolhida) {
+        //escolher as novas posições e perguntar se pode acabar
+        movimentacao.moverPersonagem(personagemEscolhido, direcaoEscolhida);
+        //combate.ataque(personagemEscolhido,);
+    }
+
+    public boolean fimDeJogo() {
+        if (this.time1.isEmpty() || this.time2.isEmpty())
+            return true;
+        return false;
+    }
 }

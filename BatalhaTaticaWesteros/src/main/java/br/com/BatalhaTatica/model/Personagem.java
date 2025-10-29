@@ -83,4 +83,12 @@ public abstract class Personagem {
 
     public abstract int alcanceMax();
 
+
+    @Override
+    public String toString() {
+        return String.format(
+                "🧙 %-12s | 🏠 %-10s | ❤️ %3d/%-3d | ⚔️ %-3d | 🛡️ %-3d | 📍 %s",
+                nome, casa, vidaAtual, vidaMax, atkBase, defesaBase, posicao
+        );
+    }
 }
