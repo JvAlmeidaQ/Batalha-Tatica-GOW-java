@@ -1,9 +1,18 @@
 package br.com.BatalhaTatica.model;
 
-public class Tabuleiro {
+public class Tabuleiro implements Cloneable {
 
     private final int TAM = 10;
     private final Personagem[][] tabuleiro = new Personagem[TAM][TAM];
+
+    public int getTAM() {
+        return TAM;
+    }
+
+    @Override
+    public Tabuleiro clone() throws CloneNotSupportedException {
+        return (Tabuleiro) super.clone();
+    }
 
     public void adicionarPersonagem(Personagem personagem, Posicao p) {
         this.tabuleiro[p.getLinha()][p.getColuna()] = personagem;

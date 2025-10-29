@@ -6,6 +6,8 @@ import br.com.BatalhaTatica.model.Personagem;
 import br.com.BatalhaTatica.service.Jogo;
 import br.com.BatalhaTatica.view.JogoVisualizer;
 
+import java.util.List;
+
 public class Controller {
 
     private JogoVisualizer view;
@@ -47,10 +49,21 @@ public class Controller {
                 //logicaHumano
                 Personagem personagemEscolhido = view.escolhaDoPersonagem(jogo.getTime());
                 Direcao direcaoEscolhida = view.escolhaDoDirecao();
-                jogo.acaoPersonagem(personagemEscolhido, direcaoEscolhida);
+                Boolean movimentoBemSucedido = jogo.movimentarPersonagem(personagemEscolhido, direcaoEscolhida);
+                if (!movimentoBemSucedido) {
+                    view.movimentacaoInvalida();
+                }
 
-            } else
-                break;
+                List<Personagem> possiveisAlvos = jogo.alvos(personagemEscolhido);
+                if (!possiveisAlvos.isEmpty()) {
+                    Personagem alvoEscolhido = view.escolherAlvo(possiveisAlvos);
+                    jogo.atacar(personagemEscolhido, alvoEscolhido);
+                    view.mensagemAtaque(personagemEscolhido, alvoEscolhido);
+                }
+            } else {
+                break; //logica robo
+            }
+
             jogo.setNumTurno();
         }
     }

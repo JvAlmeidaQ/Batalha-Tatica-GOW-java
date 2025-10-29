@@ -166,6 +166,10 @@ public class JogoVisualizer {
                 + tabulacao;
     }
 
+    public void mensagemAtaque(Personagem atacante, Personagem defensor) {
+        System.out.println(defensor.getNome() + "foi atacado por " + atacante.getNome() + "!");
+    }
+
     public int modoDaPartida() {
         System.out.println("\n==============================");
         System.out.println("        MODO DA PARTIDA       ");
@@ -176,6 +180,10 @@ public class JogoVisualizer {
         System.out.print("→ Sua escolha: ");
 
         int escolha = sc.nextInt();
+        while (escolha != 1 && escolha != 2) {
+            System.out.println("Escolha invalida! Digite 1 ou 2");
+            escolha = sc.nextInt();
+        }
         return escolha;
     }
 
@@ -195,6 +203,17 @@ public class JogoVisualizer {
     public void numTurno(int turno) {
         System.out.println("🔄 Turno " + turno + " iniciado.");
         System.out.println("Analise, planeje e execute sua jogada!");
+    }
+
+    public void imprimePersonagens(List<Personagem> time1, List<Personagem> time2) {
+        System.out.println("TIME 1");
+        for (Personagem p : time1) {
+            System.out.println(p);
+        }
+        System.out.println("TIME 2");
+        for (Personagem p : time2) {
+            System.out.println(p);
+        }
     }
 
     public Personagem escolhaDoPersonagem(List<Personagem> personagens) {
@@ -220,26 +239,53 @@ public class JogoVisualizer {
         return personagemEncontrado;
     }
 
-    // No seu pacote View
 
     public Direcao escolhaDoDirecao() {
         Direcao direcaoEscolhida = null;
 
         while (direcaoEscolhida == null) {
-            System.out.println("Em qual direção vc quer se mover: ");
-            System.out.println("W (Cima) / A (Esquerda) / S (Baixo) / D (Direita)");
-            System.out.print("→ Sua escolha: ");
+            System.out.println("Qual será o seu movimento na rodada: ");
+            System.out.println("W (Cima) / A (Esquerda) / S (Baixo) / D (Direita) / Enter (FicarParado)");
+            System.out.print("Sua escolha: ");
             String escolha = sc.nextLine();
 
             try {
                 direcaoEscolhida = Direcao.valueOf(escolha.toUpperCase());
 
             } catch (IllegalArgumentException e) { //Mudar execessão?
-                System.out.println("❌ Direção inválida! Por favor, digite apenas W, A, S ou D.");
+                System.out.println("Direção inválida! Por favor, digite apenas W, A, S ou D.");
             }
 
         }
         return direcaoEscolhida;
+    }
+
+    public void movimentacaoInvalida() {
+        System.out.println("Nao é possível mover para esta posição, escolha outra direção!");
+        System.out.println();
+        escolhaDoDirecao();
+    }
+
+    public Personagem escolherAlvo(List<Personagem> personagensAlvos) {
+        System.out.println("=== Lista de Possíveis Alvos ===");
+        for (Personagem alvo : personagensAlvos) {
+            System.out.println(alvo);
+            System.out.println("----------------------------");
+        }
+        Personagem alvoEscolhido = null;
+        while (alvoEscolhido == null) {
+            System.out.println("Digite o nome do personagem que você quer atacar?");
+            String nome = sc.nextLine();
+
+            for (Personagem alvo : personagensAlvos) {
+                if (alvo.getNome().equals(nome))
+                    alvoEscolhido = alvo;
+            }
+            if (alvoEscolhido == null)
+                System.out.print("Personagem não encontrado, digite um nome valido: ");
+        }
+
+        return alvoEscolhido;
     }
 }
 

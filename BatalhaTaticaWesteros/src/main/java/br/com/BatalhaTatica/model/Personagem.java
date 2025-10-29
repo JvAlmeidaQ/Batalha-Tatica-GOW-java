@@ -21,6 +21,12 @@ public abstract class Personagem {
         this.posicao = null;
     }
 
+    @Override
+    public Personagem clone() throws CloneNotSupportedException {
+        Personagem clonePersonagem = (Personagem) super.clone();
+        return clonePersonagem;
+    }
+
     public Integer getId() {
         return id;
     }

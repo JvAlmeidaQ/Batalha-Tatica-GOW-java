@@ -5,4 +5,5 @@ public enum Direcao {
     S,
     A,
     D,
+    ENTER,
 }

@@ -38,18 +38,20 @@ public class Movimentacao {
             setPosicaoInicial(personagem);
     }
 
-    public void moverPersonagem(Personagem personagem, Direcao direcao) {
+    public boolean moverPersonagem(Personagem personagem, Direcao direcao) {
         Posicao novaPosicao;
         switch (direcao) {
             case W -> novaPosicao = new Posicao(personagem.getLinha() - 1, personagem.getColuna());
             case D -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna() + 1);
             case S -> novaPosicao = new Posicao(personagem.getLinha() + 1, personagem.getColuna());
             case A -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna() - 1);
-            default -> throw new IllegalStateException("Unexpected value: " + direcao); //Execção Peronalizada;
+            case ENTER -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna());
+            default -> throw new IllegalStateException("Unexpected value: " + direcao);
         }
         if (!this.tabuleiro.verificarPosicao(novaPosicao))
-            return; // lançar execção
+            return false;
         this.tabuleiro.novaPosicao(personagem, novaPosicao);
+        return true;
     }
 
 }

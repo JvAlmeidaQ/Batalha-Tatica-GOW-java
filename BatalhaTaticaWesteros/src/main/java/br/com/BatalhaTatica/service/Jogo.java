@@ -31,7 +31,6 @@ public class Jogo {
         this.replay = replay;
     }
 
-
     public Personagem criarPersonagem(String nome, Casas casa) {
 
         int id = this.proximoId;
@@ -134,10 +133,30 @@ public class Jogo {
             return this.time2;
     }
 
-    public void acaoPersonagem(Personagem personagemEscolhido, Direcao direcaoEscolhida) {
-        //escolher as novas posições e perguntar se pode acabar
-        movimentacao.moverPersonagem(personagemEscolhido, direcaoEscolhida);
-        //combate.ataque(personagemEscolhido,);
+    public boolean movimentarPersonagem(Personagem personagemEscolhido, Direcao direcaoEscolhida) {
+        return movimentacao.moverPersonagem(personagemEscolhido, direcaoEscolhida);
+    }
+
+    public List<Personagem> alvos(Personagem atacante) {
+        List<Personagem> alvosValidos = new ArrayList<>();
+        if (this.numTurno % 2 == 0) {
+            for (Personagem inimigo : this.time2) {
+                if (this.combate.estaVivo(inimigo) && this.combate.distanciaValida(atacante, inimigo)) {
+                    alvosValidos.add(inimigo);
+                }
+            }
+        } else {
+            for (Personagem inimigo : this.time1) {
+                if (this.combate.estaVivo(inimigo) && this.combate.distanciaValida(atacante, inimigo)) {
+                    alvosValidos.add(inimigo);
+                }
+            }
+        }
+        return alvosValidos;
+    }
+
+    public void atacar(Personagem atacante, Personagem alvo) {
+        this.combate.ataque(atacante, alvo);
     }
 
     public boolean fimDeJogo() {

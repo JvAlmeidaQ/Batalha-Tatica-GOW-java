@@ -1,5 +1,6 @@
 package br.com.BatalhaTatica.service;
 
+import br.com.BatalhaTatica.exceptions.AtaqueInvalidoException;
 import br.com.BatalhaTatica.model.Personagem;
 import br.com.BatalhaTatica.model.Tabuleiro;
 import br.com.BatalhaTatica.util.DistanciaChebyshev;
@@ -42,8 +43,9 @@ public class Combate {
                 System.out.println(view.mensagemMorte(atacante, defensor));
                 this.tabuleiro.limparPosicao(defensor.getPosicao());
             }
-        } //else
-        // lançar excessão;
+        } else {
+            throw new AtaqueInvalidoException("Ataque invalido: O alvo " + defensor.getNome() + " Não está no alcance ou já está morto");
+        }
     }
 
 }
