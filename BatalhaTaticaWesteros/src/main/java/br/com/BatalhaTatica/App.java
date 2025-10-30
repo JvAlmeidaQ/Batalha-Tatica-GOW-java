@@ -21,8 +21,7 @@ public class App {
         Jogo jogo = new Jogo(combate, movimentacao, bot, tabuleiro, replay);
         Controller controller = new Controller(jogoVisualizer, jogo, bot);
 
-        controller.preJogo();
-        controller.executarTurnos();
+        controller.iniciarJogo();
     }
 }
 

@@ -38,7 +38,12 @@ public class Controller {
         view.mensagemDeCriacao();
     }
 
-    public void iniciarJogo() {
+    public void iniciarJogo(){
+        preJogo();
+        executarTurnos();
+    }
+
+    public void iniciarPersonagem() {
         Casas casa = view.enviaCasa();
         String nome = view.enviarNome(this.jogo.getTime());
 
@@ -90,9 +95,11 @@ public class Controller {
                 }
             }
 
+            jogo.gravaTurno();
             jogo.setNumTurno();
 
         }
+        fimdeJogo();
         view.msgFimdeJogo(this.jogo.timeVencedor());
     }
 
@@ -100,7 +107,25 @@ public class Controller {
         view.mensagemCriarTime(time);
         for (int i = 0; i < 3; i++) {
             view.mensagemNumeroPersonagem(i);
-            iniciarJogo();
+            iniciarPersonagem();
+        }
+    }
+
+    private void fimdeJogo(){
+        int opcao = view.msgFimdeJogo(this.jogo.timeVencedor());
+        switch (opcao) {
+            case 1: {
+                iniciarJogo();
+                break;
+            }
+            case 2: {
+                break;
+                //Retornar algo para a controller e chamar o replay;
+            }
+            default: {
+                System.exit(0);
+                break;
+            }
         }
     }
 }

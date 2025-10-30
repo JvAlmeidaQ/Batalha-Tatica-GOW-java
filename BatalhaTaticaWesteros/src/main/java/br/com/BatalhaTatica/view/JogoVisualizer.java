@@ -334,23 +334,29 @@ public class JogoVisualizer {
         return alvoEscolhido;
     }
 
-    public void msgFimdeJogo(int timeVencedor) {
+    public int msgFimdeJogo(int timeVencedor) {
         System.out.println("Fim de jogo!");
         System.out.println("O time " + timeVencedor + "Venceu!!!");
         System.out.println("Obrigado por jogar!");
-        System.out.println("1.Sair");
+        System.out.println("1.Jogar novamente");
         System.out.println("2.Replay");
-        int opcao = sc.nextInt();
-        switch (opcao) {
-            case 1: {
-                System.exit(0);
-                break;
-            }
-            case 2: {
-                break;
-                //Retornar algo para a controller e chamar o replay;
+        System.out.println("3.Sair");
+        int opcao = -1;
+
+        while (opcao != 1 && opcao != 2 && opcao != 3) {
+            try {
+                opcao = sc.nextInt();
+
+                if (opcao != 1 && opcao != 2 && opcao != 3) {
+                    System.out.println("\nEscolha invalida. Digite 1, 2 ou 3.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida! Digite apenas os números 1, 2 ou 3.");
+                sc.nextLine();
             }
         }
+        sc.nextLine();
+        return opcao;
     }
 }
 

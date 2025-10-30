@@ -9,16 +9,12 @@ import java.util.List;
 
 public class Turno {
 
-    private Jogo jogo;
     private Tabuleiro tabuleiroTurno;
 
     private List<Personagem> time1Turno = new ArrayList<>();
-    ;
     private List<Personagem> time2Turno = new ArrayList<>();
-    ;
 
-    public Turno(Tabuleiro tabuleiro, Jogo jogo) {
-        this.jogo = jogo;
+    public Turno(Tabuleiro tabuleiro, List<Personagem> time1, List<Personagem> time2) {
 
         try {
             this.tabuleiroTurno = tabuleiro.clone();
@@ -26,14 +22,14 @@ public class Turno {
             throw new RuntimeException("Falha ao clonar o Tabuleiro.", e);
         }
 
-        for (Personagem pOriginal : jogo.getTime1()) {
+        for (Personagem pOriginal : time1) {
             try {
                 this.time1Turno.add(pOriginal.clone());
             } catch (CloneNotSupportedException e) {
                 throw new RuntimeException("Falha ao clonar Personagem do Time 1.", e);
             }
         }
-        for (Personagem pOriginal : jogo.getTime2()) {
+        for (Personagem pOriginal : time2) {
             try {
                 this.time2Turno.add(pOriginal.clone());
             } catch (CloneNotSupportedException e) {

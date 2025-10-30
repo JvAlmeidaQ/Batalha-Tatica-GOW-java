@@ -1,6 +1,7 @@
 package br.com.BatalhaTatica.service;
 
 import br.com.BatalhaTatica.model.*;
+import br.com.BatalhaTatica.util.Turno;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class Jogo {
     private Bots bot;
     private Tabuleiro tabuleiro;
     private Replay replay;
+    private Turno turno;
 
     private Random random = new Random();
     private int proximoId = 1;
@@ -124,6 +126,11 @@ public class Jogo {
             return "Robo";
         else
             return "Jogador";
+    }
+
+    public void gravaTurno(){
+        Turno turno = new Turno(tabuleiro, this.time1, this.time2);
+        replay.setTurno(turno);
     }
 
     public List<Personagem> getTime() {

@@ -16,6 +16,10 @@ public class Replay {
         this.view = jogoVisualizer;
     }
 
+    public void setTurno(Turno T){
+        replay.add(T);
+    }
+
     public void imprimeReplayPersonagens(Turno T) {
         view.imprimePersonagens(T.getTime1(), T.getTime2());
     }
