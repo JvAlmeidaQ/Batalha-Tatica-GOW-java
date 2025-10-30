@@ -21,7 +21,7 @@ public class Replay {
     }
 
     public void imprimeReplayPersonagens(Turno T) {
-        view.imprimePersonagens(T.getTime1(), T.getTime2());
+        view.imprimeString(T.getPrintTimes());
     }
 
     public void imprimeReplayTabuleiro(Turno T) {

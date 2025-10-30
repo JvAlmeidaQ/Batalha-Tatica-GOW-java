@@ -95,7 +95,7 @@ public class Controller {
                 }
             }
 
-            jogo.gravaTurno();
+            jogo.gravaTurno(view.retornaImprecaoPersonagens(jogo.getTime1(), jogo.getTime2()));
             jogo.setNumTurno();
 
         }
@@ -119,8 +119,9 @@ public class Controller {
                 break;
             }
             case 2: {
+                jogo.chamaReplay();
+                fimdeJogo();
                 break;
-                //Retornar algo para a controller e chamar o replay;
             }
             default: {
                 System.exit(0);

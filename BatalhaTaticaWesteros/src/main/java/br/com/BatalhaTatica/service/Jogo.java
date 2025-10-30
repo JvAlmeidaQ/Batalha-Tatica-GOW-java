@@ -2,6 +2,7 @@ package br.com.BatalhaTatica.service;
 
 import br.com.BatalhaTatica.model.*;
 import br.com.BatalhaTatica.util.Turno;
+import br.com.BatalhaTatica.view.JogoVisualizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,8 +129,8 @@ public class Jogo {
             return "Jogador";
     }
 
-    public void gravaTurno(){
-        Turno turno = new Turno(tabuleiro, this.time1, this.time2);
+    public void gravaTurno(String printTimes){
+        Turno turno = new Turno(tabuleiro, printTimes);
         replay.setTurno(turno);
     }
 
@@ -211,5 +212,9 @@ public class Jogo {
             return 2;
         else
             return 1;
+    }
+
+    public void chamaReplay(){
+        replay.imprimeReplay();
     }
 }

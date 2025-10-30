@@ -249,17 +249,25 @@ public class JogoVisualizer {
         System.out.println();
     }
 
-    public void imprimePersonagens(List<Personagem> time1, List<Personagem> time2) {
-        System.out.println("TIME 1");
+    public String retornaImprecaoPersonagens(List<Personagem> time1, List<Personagem> time2) {
+        String printTime1 = "TIME 1\n";
         for (Personagem p : time1) {
-            System.out.println(p);
+            printTime1 = printTime1 + p + "\n";
         }
-        System.out.println();
-        System.out.println("TIME 2");
+        String printTime2 = "\nTIME 2\n";
         for (Personagem p : time2) {
-            System.out.println(p);
+            printTime2 = printTime2 + p + "\n";
         }
-        System.out.println();
+        return printTime1
+                +printTime2;
+    }
+
+    public void imprimePersonagens(List<Personagem> time1, List<Personagem> time2){
+        System.out.print(retornaImprecaoPersonagens(time1, time2));
+    }
+
+    public void imprimeString(String print){
+        System.out.println(print);
     }
 
     public Personagem escolhaDoPersonagem(List<Personagem> personagens) {
@@ -335,8 +343,8 @@ public class JogoVisualizer {
     }
 
     public int msgFimdeJogo(int timeVencedor) {
-        System.out.println("Fim de jogo!");
-        System.out.println("O time " + timeVencedor + "Venceu!!!");
+        System.out.println("FIM DE JOGO!");
+        System.out.println("O time " + timeVencedor + " Venceu!!!");
         System.out.println("Obrigado por jogar!");
         System.out.println("1.Jogar novamente");
         System.out.println("2.Replay");
