@@ -133,6 +133,15 @@ public class Jogo {
             return this.time2;
     }
 
+
+    public List<Personagem> getTime1() {
+        return this.time1;
+    }
+
+    public List<Personagem> getTime2() {
+        return this.time2;
+    }
+
     public boolean movimentarPersonagem(Personagem personagemEscolhido, Direcao direcaoEscolhida) {
         return movimentacao.moverPersonagem(personagemEscolhido, direcaoEscolhida);
     }

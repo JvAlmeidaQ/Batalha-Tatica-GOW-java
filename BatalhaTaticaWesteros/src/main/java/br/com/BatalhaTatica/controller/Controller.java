@@ -48,10 +48,15 @@ public class Controller {
             if (jogo.turnoDeQuem().equals("Jogador")) {
                 //logicaHumano
                 Personagem personagemEscolhido = view.escolhaDoPersonagem(jogo.getTime());
-                Direcao direcaoEscolhida = view.escolhaDoDirecao();
-                Boolean movimentoBemSucedido = jogo.movimentarPersonagem(personagemEscolhido, direcaoEscolhida);
-                if (!movimentoBemSucedido) {
-                    view.movimentacaoInvalida();
+
+                boolean movimentoFoiValido = false;
+                while (!movimentoFoiValido) {
+                    Direcao direcaoEscolhida = view.escolhaDoDirecao();
+                    Boolean movimentoBemSucedido = jogo.movimentarPersonagem(personagemEscolhido, direcaoEscolhida);
+                    if (movimentoBemSucedido) {
+                        movimentoFoiValido = true;
+                    } else
+                        view.movimentacaoInvalida();
                 }
 
                 List<Personagem> possiveisAlvos = jogo.alvos(personagemEscolhido);
