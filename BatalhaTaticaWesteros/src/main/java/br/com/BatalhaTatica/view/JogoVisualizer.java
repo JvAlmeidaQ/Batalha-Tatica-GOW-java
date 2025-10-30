@@ -2,7 +2,9 @@ package br.com.BatalhaTatica.view;
 
 import br.com.BatalhaTatica.model.*;
 
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class JogoVisualizer {
@@ -130,6 +132,18 @@ public class JogoVisualizer {
         return nome;
     }
 
+    public boolean verificaNomeRepetido(String nome, List<Personagem> time){
+        if(!time.isEmpty()){
+            for(Personagem p : time){
+                if(Objects.equals(p.getNome(), nome)){
+                    System.out.println("O nome digitado já esta sendo utilizado.\nForneca outro nome.");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean verificaNome(String nome) {
         for (int i = 0; i < nome.length(); i++) {
             if (!Character.isDigit(nome.charAt(i)))
@@ -186,6 +200,8 @@ public class JogoVisualizer {
     }
 
     public int modoDaPartida() {
+        int escolha = -1;
+
         System.out.println("\n==============================");
         System.out.println("        MODO DA PARTIDA       ");
         System.out.println("==============================");
@@ -194,13 +210,19 @@ public class JogoVisualizer {
         System.out.println("  2. Jogador vs Bot");
         System.out.print("→ Sua escolha: ");
 
-        int escolha = sc.nextInt();
-        sc.nextLine();
         while (escolha != 1 && escolha != 2) {
-            System.out.println("Escolha invalida! Digite 1 ou 2");
-            escolha = sc.nextInt();
-            sc.nextLine();
+            try {
+                escolha = sc.nextInt();
+
+                if (escolha != 1 && escolha != 2) {
+                    System.out.println("\nEscolha fora do intervalo. Digite 1 ou 2.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida! Digite apenas os números 1 ou 2.");
+                sc.nextLine();
+            }
         }
+        sc.nextLine();
         return escolha;
     }
 

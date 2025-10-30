@@ -36,8 +36,8 @@ public class Controller {
     }
 
     public void iniciarJogo() {
-        String nome = view.enviarNome();
         Casas casa = view.enviaCasa();
+        String nome = view.enviarNome();
 
         jogo.criarPersonagem(nome, casa);
     }
