@@ -119,24 +119,23 @@ public class JogoVisualizer {
         };
     }
 
-    public String enviarNome() {
+    public String enviarNome(List<Personagem> personagens) {
         System.out.println("Digite o nome do personagem:");
         String nome = sc.nextLine();
 
         String trim = nome.trim();
-        while (trim.isEmpty() || !verificaNome(trim)) {
-            System.out.println("Forneça um nome válido");
+        while (trim.isEmpty() || !verificaNome(trim) || verificaNomeRepetido(nome, personagens)) {
+            System.out.println("Esse nome já está sendo utilizado ou Não é valido! \nForneça outro nome: ");
             nome = sc.nextLine();
             trim = nome.trim();
         }
         return nome;
     }
 
-    public boolean verificaNomeRepetido(String nome, List<Personagem> time){
-        if(!time.isEmpty()){
-            for(Personagem p : time){
-                if(Objects.equals(p.getNome(), nome)){
-                    System.out.println("O nome digitado já esta sendo utilizado.\nForneca outro nome.");
+    public boolean verificaNomeRepetido(String nome, List<Personagem> time) {
+        if (!time.isEmpty()) {
+            for (Personagem p : time) {
+                if (Objects.equals(p.getNome(), nome)) {
                     return true;
                 }
             }
@@ -171,16 +170,16 @@ public class JogoVisualizer {
         return casaEscolhida;
     }
 
-    public void mensagemNumeroPersonagem(int ind){
-        switch (ind){
+    public void mensagemNumeroPersonagem(int ind) {
+        switch (ind) {
             case 0 -> {
-                System.out.println("Primeriro personagem");
+                System.out.println("Criação do Primeriro personagem");
             }
-            case 1 ->{
-                System.out.println("Segundo personagem");
+            case 1 -> {
+                System.out.println("Criação do Segundo personagem");
             }
-            case 2 ->{
-                System.out.println("Terceiro personagem");
+            case 2 -> {
+                System.out.println("Criação do Terceiro personagem");
             }
         }
     }
@@ -196,7 +195,7 @@ public class JogoVisualizer {
     }
 
     public void mensagemAtaque(Personagem atacante, Personagem defensor) {
-        System.out.println(defensor.getNome() + "foi atacado por " + atacante.getNome() + "!");
+        System.out.println(defensor.getNome() + " foi atacado por " + atacante.getNome() + "!");
     }
 
     public int modoDaPartida() {
@@ -228,10 +227,10 @@ public class JogoVisualizer {
 
     public void mensagemCriarTime(int time) {
         if (time == 1)
-            System.out.println("CRIACAO DO PRIMEIRO TIME");
-        else{
+            System.out.println("CRIAÇÃO DO PRIMEIRO TIME");
+        else {
             System.out.println();
-            System.out.println("CRIACAO DO SEGUNDO TIME");
+            System.out.println("CRIAÇÃO DO SEGUNDO TIME");
             System.out.println();
         }
     }
@@ -244,6 +243,7 @@ public class JogoVisualizer {
     }
 
     public void numTurno(int turno) {
+        System.out.println();
         System.out.println("🔄 Turno " + turno + " iniciado.");
         System.out.println("Analise, planeje e execute sua jogada!");
         System.out.println();
@@ -292,7 +292,7 @@ public class JogoVisualizer {
 
         while (direcaoEscolhida == null) {
             System.out.println("Qual será o seu movimento na rodada: ");
-            System.out.println("W (Cima) / A (Esquerda) / S (Baixo) / D (Direita) / Enter (FicarParado)");
+            System.out.println("W (Cima) / A (Esquerda) / S (Baixo) / D (Direita) / Parado (FicarParado)");
             System.out.print("Sua escolha: ");
             String escolha = sc.nextLine();
 
@@ -300,7 +300,7 @@ public class JogoVisualizer {
                 direcaoEscolhida = Direcao.valueOf(escolha.toUpperCase());
 
             } catch (IllegalArgumentException e) {
-                System.out.println("Direção inválida! Por favor, digite apenas W, A, S ou D.");
+                System.out.println("Direção inválida! Por favor, digite apenas W, A, S, D ou se não quer se mover");
             }
 
         }

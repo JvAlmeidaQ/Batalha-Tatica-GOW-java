@@ -45,7 +45,7 @@ public class Movimentacao {
             case D -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna() + 1);
             case S -> novaPosicao = new Posicao(personagem.getLinha() + 1, personagem.getColuna());
             case A -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna() - 1);
-            case ENTER -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna());
+            case PARADO -> novaPosicao = new Posicao(personagem.getLinha(), personagem.getColuna());
             default -> throw new IllegalStateException("Unexpected value: " + direcao);
         }
         if (!this.tabuleiro.verificarPosicao(novaPosicao))

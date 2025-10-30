@@ -18,7 +18,7 @@ public class App {
         Movimentacao movimentacao = new Movimentacao(tabuleiro);
         Bots bot = new Bots(combate);
         Replay replay = new Replay(jogoVisualizer);
-        Jogo jogo = new Jogo(combate, movimentacao, bot, tabuleiro, replay, jogoVisualizer);
+        Jogo jogo = new Jogo(combate, movimentacao, bot, tabuleiro, replay);
         Controller controller = new Controller(jogoVisualizer, jogo);
 
         controller.preJogo();

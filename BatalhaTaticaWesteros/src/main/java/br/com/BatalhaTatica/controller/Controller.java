@@ -37,7 +37,7 @@ public class Controller {
 
     public void iniciarJogo() {
         Casas casa = view.enviaCasa();
-        String nome = view.enviarNome();
+        String nome = view.enviarNome(this.jogo.getTime());
 
         jogo.criarPersonagem(nome, casa);
     }
@@ -63,9 +63,14 @@ public class Controller {
 
                 List<Personagem> possiveisAlvos = jogo.alvos(personagemEscolhido);
                 if (!possiveisAlvos.isEmpty()) {
-                    Personagem alvoEscolhido = view.escolherAlvo(possiveisAlvos);
-                    view.mensagemAtaque(personagemEscolhido, alvoEscolhido);
-                    jogo.atacar(personagemEscolhido, alvoEscolhido);
+                    if (possiveisAlvos.size() > 1) {
+                        Personagem alvoEscolhido = view.escolherAlvo(possiveisAlvos);
+                        view.mensagemAtaque(personagemEscolhido, alvoEscolhido);
+                        jogo.atacar(personagemEscolhido, alvoEscolhido);
+                    } else {
+                        view.mensagemAtaque(personagemEscolhido, possiveisAlvos.get(0));
+                        jogo.atacar(personagemEscolhido, possiveisAlvos.get(0));
+                    }
                 }
             } else {
                 break; //logica robo
