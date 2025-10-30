@@ -3,6 +3,7 @@ package br.com.BatalhaTatica.controller;
 import br.com.BatalhaTatica.model.Casas;
 import br.com.BatalhaTatica.model.Direcao;
 import br.com.BatalhaTatica.model.Personagem;
+import br.com.BatalhaTatica.service.Bots;
 import br.com.BatalhaTatica.service.Jogo;
 import br.com.BatalhaTatica.view.JogoVisualizer;
 
@@ -12,10 +13,12 @@ public class Controller {
 
     private JogoVisualizer view;
     private Jogo jogo;
+    private Bots bot;
 
-    public Controller(JogoVisualizer view, Jogo jogo) {
+    public Controller(JogoVisualizer view, Jogo jogo, Bots bot) {
         this.view = view;
         this.jogo = jogo;
+        this.bot = bot;
     }
 
     public void preJogo() {
@@ -73,7 +76,18 @@ public class Controller {
                     }
                 }
             } else {
-                break; //logica robo
+                //logica robo
+                Personagem atacanteEscolido = bot.randomplayerAtacante(jogo.getTime1(), jogo.getTime2());
+                Personagem alvoEscolido = bot.randomPlayerAlvo(jogo.getTime1(), atacanteEscolido);
+                Direcao direcaoEscolida = bot.defineDirecaoBOT(atacanteEscolido, alvoEscolido);
+                jogo.movimentarPersonagem(atacanteEscolido, direcaoEscolida);
+
+                List<Personagem> possiveisAlvos = jogo.alvos(atacanteEscolido);
+                if(!possiveisAlvos.isEmpty()){
+                    alvoEscolido = jogo.alvoAleatorio(possiveisAlvos);
+                    view.mensagemAtaque(atacanteEscolido, alvoEscolido);
+                    jogo.atacar(atacanteEscolido, alvoEscolido);
+                }
             }
 
             jogo.setNumTurno();

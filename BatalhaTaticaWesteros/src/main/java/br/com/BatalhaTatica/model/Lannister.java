@@ -23,4 +23,12 @@ public class Lannister extends Personagem {
     public int alcanceMax() {
         return 2;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "🧙 %-12s | 🦁 %-10s | ❤️ %3d/%-3d | ⚔️ %-3d | 🛡️ %-3d | 📍 %s",
+                getNome(), getCasa(), getVidaAtual(), getVidaMax(), getAtkBase(), getDefesaBase(), getPosicao()
+        );
+    }
 }

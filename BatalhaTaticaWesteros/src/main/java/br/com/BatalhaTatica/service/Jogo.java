@@ -164,8 +164,33 @@ public class Jogo {
         return alvosValidos;
     }
 
+    public Personagem alvoAleatorio(List<Personagem> possiveisAlvos){
+        int tamList = possiveisAlvos.size();
+        int escolha = bot.gerarNumeroDeZeroAN_1(tamList);
+        return possiveisAlvos.get(escolha);
+    }
+
     public void atacar(Personagem atacante, Personagem alvo) {
         this.combate.ataque(atacante, alvo);
+        verificaVivo();
+    }
+
+    public void verificaVivo(){
+        Personagem delete = null;
+        for(Personagem p : time1){
+            if(p.getVidaAtual() <= 0){
+                delete = p;
+            }
+        }
+        if(delete != null)
+            time1.remove(delete);
+        for(Personagem p : time2){
+            if(p.getVidaAtual() <= 0){
+                delete = p;
+            }
+        }
+        if(delete != null)
+            time2.remove(delete);
     }
 
     public boolean fimDeJogo() {

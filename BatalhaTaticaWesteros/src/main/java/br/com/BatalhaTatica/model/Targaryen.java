@@ -2,7 +2,7 @@ package br.com.BatalhaTatica.model;
 
 public class Targaryen extends Personagem {
     public Targaryen(Integer id, String nome) {
-        super(id, nome, Casas.TARGARYEN, 45, 20, 10, null);
+        super(id, nome, Casas.TARGARYEN, 45, 2000, 10, null);
     }
 
     @Override
@@ -17,6 +17,14 @@ public class Targaryen extends Personagem {
 
     @Override
     public int alcanceMax() {
-        return 3;
+        return 30;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "🧙 %-12s | 🐲 %-10s | ❤️ %3d/%-3d | ⚔️ %-3d | 🛡️ %-3d | 📍 %s",
+                getNome(), getCasa(), getVidaAtual(), getVidaMax(), getAtkBase(), getDefesaBase(), getPosicao()
+        );
     }
 }

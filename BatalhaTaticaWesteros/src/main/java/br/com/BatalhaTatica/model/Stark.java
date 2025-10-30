@@ -22,4 +22,11 @@ public class Stark extends Personagem {
         return 1;
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+                "🧙 %-12s | 🐺 %-10s | ❤️ %3d/%-3d | ⚔️ %-3d | 🛡️ %-3d | 📍 %s",
+                getNome(), getCasa(), getVidaAtual(), getVidaMax(), getAtkBase(), getDefesaBase(), getPosicao()
+        );
+    }
 }

@@ -19,7 +19,7 @@ public class App {
         Bots bot = new Bots(combate);
         Replay replay = new Replay(jogoVisualizer);
         Jogo jogo = new Jogo(combate, movimentacao, bot, tabuleiro, replay);
-        Controller controller = new Controller(jogoVisualizer, jogo);
+        Controller controller = new Controller(jogoVisualizer, jogo, bot);
 
         controller.preJogo();
         controller.executarTurnos();
