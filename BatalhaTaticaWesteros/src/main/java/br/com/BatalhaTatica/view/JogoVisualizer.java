@@ -333,5 +333,24 @@ public class JogoVisualizer {
 
         return alvoEscolhido;
     }
+
+    public void msgFimdeJogo(int timeVencedor) {
+        System.out.println("Fim de jogo!");
+        System.out.println("O time " + timeVencedor + "Venceu!!!");
+        System.out.println("Obrigado por jogar!");
+        System.out.println("1.Sair");
+        System.out.println("2.Replay");
+        int opcao = sc.nextInt();
+        switch (opcao) {
+            case 1: {
+                System.exit(0);
+                break;
+            }
+            case 2: {
+                break;
+                //Retornar algo para a controller e chamar o replay;
+            }
+        }
+    }
 }
 

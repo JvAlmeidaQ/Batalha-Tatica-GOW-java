@@ -83,7 +83,7 @@ public class Controller {
                 jogo.movimentarPersonagem(atacanteEscolido, direcaoEscolida);
 
                 List<Personagem> possiveisAlvos = jogo.alvos(atacanteEscolido);
-                if(!possiveisAlvos.isEmpty()){
+                if (!possiveisAlvos.isEmpty()) {
                     alvoEscolido = jogo.alvoAleatorio(possiveisAlvos);
                     view.mensagemAtaque(atacanteEscolido, alvoEscolido);
                     jogo.atacar(atacanteEscolido, alvoEscolido);
@@ -91,7 +91,9 @@ public class Controller {
             }
 
             jogo.setNumTurno();
+
         }
+        view.msgFimdeJogo(this.jogo.timeVencedor());
     }
 
     private void criarTime(int time) {
