@@ -45,6 +45,8 @@ public class Controller {
     public void executarTurnos() {
         while (!jogo.fimDeJogo()) {
             view.numTurno(jogo.getNumTurno());
+            view.imprimeTabuleiro();
+            view.imprimePersonagens(this.jogo.getTime1(), this.jogo.getTime2());
             if (jogo.turnoDeQuem().equals("Jogador")) {
                 //logicaHumano
                 Personagem personagemEscolhido = view.escolhaDoPersonagem(jogo.getTime());
@@ -62,8 +64,8 @@ public class Controller {
                 List<Personagem> possiveisAlvos = jogo.alvos(personagemEscolhido);
                 if (!possiveisAlvos.isEmpty()) {
                     Personagem alvoEscolhido = view.escolherAlvo(possiveisAlvos);
-                    jogo.atacar(personagemEscolhido, alvoEscolhido);
                     view.mensagemAtaque(personagemEscolhido, alvoEscolhido);
+                    jogo.atacar(personagemEscolhido, alvoEscolhido);
                 }
             } else {
                 break; //logica robo
@@ -76,6 +78,7 @@ public class Controller {
     private void criarTime(int time) {
         view.mensagemCriarTime(time);
         for (int i = 0; i < 3; i++) {
+            view.mensagemNumeroPersonagem(i);
             iniciarJogo();
         }
     }

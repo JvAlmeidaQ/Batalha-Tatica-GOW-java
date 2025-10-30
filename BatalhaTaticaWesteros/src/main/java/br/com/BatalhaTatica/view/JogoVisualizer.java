@@ -76,17 +76,17 @@ public class JogoVisualizer {
                 separator;
     }
 
-    public String imprimeTabuleiro() {
+    public void imprimeTabuleiro() {
         StringBuilder tab = new StringBuilder();
         tab.append("╔════╤════╤════╤════╤════╤════╤════╤════╤════╤════╗\n");
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 10; j++) {
                 tab.append("║");
                 Posicao posicao = new Posicao(i, j);
-                if (!this.tabuleiro.verificarPosicao(posicao))
-                    tab.append("   ");
-                else
-                    tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
+//                if (!this.tabuleiro.posicaoIsOcupada(posicao))
+//                    tab.append("   ");
+//                else
+                tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
             }
             tab.append("║\n");
             tab.append("╞════╬════╬════╬════╬════╬════╬════╬════╬════╬════╡\n");
@@ -94,15 +94,15 @@ public class JogoVisualizer {
         for (int j = 0, i = 9; j < 10; j++) {
             tab.append("║");
             Posicao posicao = new Posicao(i, j);
-            if (!this.tabuleiro.verificarPosicao(posicao))
-                tab.append("   ");
-            else
-                tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
+//            if (!this.tabuleiro.posicaoIsOcupada(posicao))
+//                tab.append("   ");
+//            else
+            tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
         }
         tab.append("║\n");
         tab.append("╚════╧════╧════╧════╧════╧════╧════╧════╧════╧════╝\n");
 
-        return tab.toString();
+        System.out.println(tab.toString());
     }
 
     public String getRepresentacaoVisual(Personagem personagem) {
@@ -139,8 +139,8 @@ public class JogoVisualizer {
     }
 
     public Casas enviaCasa() {
-        System.out.println(this.gerarTabelaCasas());
         System.out.println();
+        System.out.println(this.gerarTabelaCasas());
         System.out.println("Qual a casa do personagem?");
         Casas casaEscolhida = null;
         String nomeCasa;
@@ -153,12 +153,27 @@ public class JogoVisualizer {
                 System.out.println("Casa digitada inválida!\nDigite novamente.");
             }
         }
+        System.out.println();
         return casaEscolhida;
     }
 
+    public void mensagemNumeroPersonagem(int ind){
+        switch (ind){
+            case 0 -> {
+                System.out.println("Primeriro personagem");
+            }
+            case 1 ->{
+                System.out.println("Segundo personagem");
+            }
+            case 2 ->{
+                System.out.println("Terceiro personagem");
+            }
+        }
+    }
+
     public String mensagemMorte(Personagem atacante, Personagem morto) {
-        String tabulacao = "---------------------------------------------------------------------------";
-        String visualKill = getRepresentacaoVisual(atacante) + "🗡" + getRepresentacaoVisual(morto);
+        String tabulacao = "---------------------------------------------------------------------------\n";
+        String visualKill = getRepresentacaoVisual(atacante) + "🗡" + getRepresentacaoVisual(morto) + "\n";
         String msg = morto.getNome() + " foi morto por " + atacante.getNome() + "!\n";
         return tabulacao
                 + visualKill
@@ -180,29 +195,36 @@ public class JogoVisualizer {
         System.out.print("→ Sua escolha: ");
 
         int escolha = sc.nextInt();
+        sc.nextLine();
         while (escolha != 1 && escolha != 2) {
             System.out.println("Escolha invalida! Digite 1 ou 2");
             escolha = sc.nextInt();
+            sc.nextLine();
         }
         return escolha;
     }
 
     public void mensagemCriarTime(int time) {
         if (time == 1)
-            System.out.println("Criacao do primeiro time");
-        else
-            System.out.println("Criacao do segundo time");
+            System.out.println("CRIACAO DO PRIMEIRO TIME");
+        else{
+            System.out.println();
+            System.out.println("CRIACAO DO SEGUNDO TIME");
+            System.out.println();
+        }
     }
 
     public void mensagemDeCriacao() {
         System.out.println("⚔️  Times foram formados, bandeiras erguidas!");
         System.out.println("🏟️  Cada equipe está em posição, pronta para a batalha.");
         System.out.println("🔥  O jogo está prestes a começar... Que vença o melhor!");
+        System.out.println();
     }
 
     public void numTurno(int turno) {
         System.out.println("🔄 Turno " + turno + " iniciado.");
         System.out.println("Analise, planeje e execute sua jogada!");
+        System.out.println();
     }
 
     public void imprimePersonagens(List<Personagem> time1, List<Personagem> time2) {
@@ -210,17 +232,20 @@ public class JogoVisualizer {
         for (Personagem p : time1) {
             System.out.println(p);
         }
+        System.out.println();
         System.out.println("TIME 2");
         for (Personagem p : time2) {
             System.out.println(p);
         }
+        System.out.println();
     }
 
     public Personagem escolhaDoPersonagem(List<Personagem> personagens) {
-        System.out.println("=== Lista de Personagens Ativos ===");
+        System.out.println("============ Lista de Personagens Ativos ============");
+        System.out.println("---------------------------------------------------------------------------");
         for (Personagem p : personagens) {
             System.out.println(p);
-            System.out.println("----------------------------");
+            System.out.println("---------------------------------------------------------------------------");
         }
 
         Personagem personagemEncontrado = null;
@@ -252,7 +277,7 @@ public class JogoVisualizer {
             try {
                 direcaoEscolhida = Direcao.valueOf(escolha.toUpperCase());
 
-            } catch (IllegalArgumentException e) { //Mudar execessão?
+            } catch (IllegalArgumentException e) {
                 System.out.println("Direção inválida! Por favor, digite apenas W, A, S ou D.");
             }
 
@@ -262,7 +287,6 @@ public class JogoVisualizer {
 
     public void movimentacaoInvalida() {
         System.out.println("Nao é possível mover para esta posição, escolha outra direção!");
-        System.out.println();
         escolhaDoDirecao();
     }
 

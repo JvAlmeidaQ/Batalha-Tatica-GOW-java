@@ -43,7 +43,7 @@ public class Tabuleiro implements Cloneable {
     }
 
     public boolean verificarPosicao(Posicao p) {
-        if (!this.posNosLimites(p) && this.posicaoIsOcupada(p))
+        if (!this.posNosLimites(p) || this.posicaoIsOcupada(p))
             return false;
         return true;
     }
