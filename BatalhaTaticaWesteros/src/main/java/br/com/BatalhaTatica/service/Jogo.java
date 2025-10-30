@@ -164,7 +164,7 @@ public class Jogo {
         return alvosValidos;
     }
 
-    public Personagem alvoAleatorio(List<Personagem> possiveisAlvos){
+    public Personagem alvoAleatorio(List<Personagem> possiveisAlvos) {
         int tamList = possiveisAlvos.size();
         int escolha = bot.gerarNumeroDeZeroAN_1(tamList);
         return possiveisAlvos.get(escolha);
@@ -175,21 +175,21 @@ public class Jogo {
         verificaVivo();
     }
 
-    public void verificaVivo(){
+    public void verificaVivo() {
         Personagem delete = null;
-        for(Personagem p : time1){
-            if(p.getVidaAtual() <= 0){
+        for (Personagem p : time1) {
+            if (p.getVidaAtual() <= 0) {
                 delete = p;
             }
         }
-        if(delete != null)
+        if (delete != null)
             time1.remove(delete);
-        for(Personagem p : time2){
-            if(p.getVidaAtual() <= 0){
+        for (Personagem p : time2) {
+            if (p.getVidaAtual() <= 0) {
                 delete = p;
             }
         }
-        if(delete != null)
+        if (delete != null)
             time2.remove(delete);
     }
 
@@ -197,5 +197,12 @@ public class Jogo {
         if (this.time1.isEmpty() || this.time2.isEmpty())
             return true;
         return false;
+    }
+
+    public int timeVencedor() {
+        if (this.time1.isEmpty())
+            return 2;
+        else
+            return 1;
     }
 }
