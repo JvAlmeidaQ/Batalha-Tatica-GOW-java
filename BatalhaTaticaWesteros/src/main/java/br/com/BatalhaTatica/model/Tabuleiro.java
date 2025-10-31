@@ -32,12 +32,12 @@ public class Tabuleiro implements Cloneable {
         this.adicionarPersonagem(personagem, novaPosicao);
     }
 
-    public boolean posicaoIsOcupada(Posicao p) {
+    public boolean posicaoIsOcupada(Posicao p) {//retorna verdadeiro se a posição estiver ocupada
         return getPosicaoPersonagem(p) != null;
     }
 
-    public boolean posNosLimites(Posicao p) {
-        if (p.getLinha() >= TAM && p.getColuna() >= TAM)
+    public boolean posNosLimites(Posicao p) {//retorna verdadeiro se a posição estiver dentro do tabuleiro
+        if (p.getLinha() >= TAM || p.getColuna() >= TAM)
             return false;
         return p.getLinha() >= 0 && p.getColuna() >= 0;
     }

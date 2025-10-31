@@ -9,21 +9,16 @@ import java.util.List;
 
 public class Turno {
 
-    private Tabuleiro tabuleiroTurno;
+    private String printTabuleiro;
     private String printTimes;
 
-    public Turno(Tabuleiro tabuleiro, String times) {
-
+    public Turno(String tabuleiroTurno, String times) {
+        printTabuleiro = tabuleiroTurno;
         printTimes = times;
-        try {
-            this.tabuleiroTurno = tabuleiro.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Falha ao clonar o Tabuleiro.", e);
-        }
     }
 
-    public Tabuleiro getTabuleiro() {
-        return tabuleiroTurno;
+    public String getprintTabuleiro() {
+        return printTabuleiro;
     }
 
     public String getPrintTimes(){

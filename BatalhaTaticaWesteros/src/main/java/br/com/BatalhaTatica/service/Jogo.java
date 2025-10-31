@@ -129,8 +129,8 @@ public class Jogo {
             return "Jogador";
     }
 
-    public void gravaTurno(String printTimes){
-        Turno turno = new Turno(tabuleiro, printTimes);
+    public void gravaTurno(String printTabuleiro, String printTimes){
+        Turno turno = new Turno(printTabuleiro, printTimes);
         replay.setTurno(turno);
     }
 
@@ -216,5 +216,27 @@ public class Jogo {
 
     public void chamaReplay(){
         replay.imprimeReplay();
+    }
+
+    public void limparTabuleiro()
+    {
+        if(this.timeVencedor() == 1) {
+            for (Personagem p : time1)
+                this.tabuleiro.limparPosicao(p.getPosicao());
+        }
+        else{
+            for(Personagem p : time2)
+                this.tabuleiro.limparPosicao(p.getPosicao());
+        }
+    }
+
+    public void resetarJogo()
+    {
+        this.numTurno = 0;
+        this.time1.clear();
+        this.time2.clear();
+        this.proximoId = 1;
+        this.modoPartida = 0;
+        this.replay.getReplay().clear();
     }
 }

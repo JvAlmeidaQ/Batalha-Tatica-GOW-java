@@ -20,12 +20,16 @@ public class Replay {
         replay.add(T);
     }
 
+    public List<Turno> getReplay()
+    {
+        return replay;
+    }
     public void imprimeReplayPersonagens(Turno T) {
         view.imprimeString(T.getPrintTimes());
     }
 
     public void imprimeReplayTabuleiro(Turno T) {
-        view.imprimeTabuleiro();
+        view.imprimeString(T.getprintTabuleiro());
     }
 
     public void imprimeReplay() {

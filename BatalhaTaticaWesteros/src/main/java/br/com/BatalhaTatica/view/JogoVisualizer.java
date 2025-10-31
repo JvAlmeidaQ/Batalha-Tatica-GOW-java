@@ -78,16 +78,13 @@ public class JogoVisualizer {
                 separator;
     }
 
-    public void imprimeTabuleiro() {
+    public String imprimeTabuleiro() {
         StringBuilder tab = new StringBuilder();
         tab.append("╔════╤════╤════╤════╤════╤════╤════╤════╤════╤════╗\n");
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 10; j++) {
                 tab.append("║");
                 Posicao posicao = new Posicao(i, j);
-//                if (!this.tabuleiro.posicaoIsOcupada(posicao))
-//                    tab.append("   ");
-//                else
                 tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
             }
             tab.append("║\n");
@@ -96,15 +93,12 @@ public class JogoVisualizer {
         for (int j = 0, i = 9; j < 10; j++) {
             tab.append("║");
             Posicao posicao = new Posicao(i, j);
-//            if (!this.tabuleiro.posicaoIsOcupada(posicao))
-//                tab.append("   ");
-//            else
             tab.append(" " + this.getRepresentacaoVisual(this.tabuleiro.getPosicaoPersonagem(posicao)) + " ");
         }
         tab.append("║\n");
         tab.append("╚════╧════╧════╧════╧════╧════╧════╧════╧════╧════╝\n");
 
-        System.out.println(tab.toString());
+        return tab.toString();
     }
 
     public String getRepresentacaoVisual(Personagem personagem) {
@@ -298,17 +292,16 @@ public class JogoVisualizer {
     public Direcao escolhaDoDirecao() {
         Direcao direcaoEscolhida = null;
 
+        System.out.println("Qual será o seu movimento na rodada: ");
+        System.out.println("W (Cima) / A (Esquerda) / S (Baixo) / D (Direita) / Parado (FicarParado)");
+        System.out.print("Sua escolha: ");
         while (direcaoEscolhida == null) {
-            System.out.println("Qual será o seu movimento na rodada: ");
-            System.out.println("W (Cima) / A (Esquerda) / S (Baixo) / D (Direita) / Parado (FicarParado)");
-            System.out.print("Sua escolha: ");
             String escolha = sc.nextLine();
-
             try {
                 direcaoEscolhida = Direcao.valueOf(escolha.toUpperCase());
 
             } catch (IllegalArgumentException e) {
-                System.out.println("Direção inválida! Por favor, digite apenas W, A, S, D ou se não quer se mover");
+                System.out.println("Direção inválida! Por favor, digite apenas W, A, S, D ou se não quer se mover\nSua escolha: ");
             }
 
         }

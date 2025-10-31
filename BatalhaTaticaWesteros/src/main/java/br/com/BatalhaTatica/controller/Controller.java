@@ -53,7 +53,7 @@ public class Controller {
     public void executarTurnos() {
         while (!jogo.fimDeJogo()) {
             view.numTurno(jogo.getNumTurno());
-            view.imprimeTabuleiro();
+            view.imprimeString(view.imprimeTabuleiro());
             view.imprimePersonagens(this.jogo.getTime1(), this.jogo.getTime2());
             if (jogo.turnoDeQuem().equals("Jogador")) {
                 //logicaHumano
@@ -95,7 +95,7 @@ public class Controller {
                 }
             }
 
-            jogo.gravaTurno(view.retornaImprecaoPersonagens(jogo.getTime1(), jogo.getTime2()));
+            jogo.gravaTurno(view.imprimeTabuleiro(), view.retornaImprecaoPersonagens(jogo.getTime1(), jogo.getTime2()));
             jogo.setNumTurno();
 
         }
@@ -115,6 +115,8 @@ public class Controller {
         int opcao = view.msgFimdeJogo(this.jogo.timeVencedor());
         switch (opcao) {
             case 1: {
+                this.jogo.limparTabuleiro();
+                this.jogo.resetarJogo();
                 iniciarJogo();
                 break;
             }
